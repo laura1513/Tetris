@@ -19,20 +19,27 @@ public class Board : MonoBehaviour
     // TODO: Returns true if pos (x,y) is inside the grid, false otherwise
     public static bool InsideBorder(Vector2 pos)
     {
-        if (pos.x > 0 && pos.x < w)
+        bool si;
+        if ((pos.x >= 0 && pos.x < w) && (pos.y >= 0 && pos.y < h))
         {
-            return true;
+            si = true;
         }
         else
         {
-            return false;
+            si = false;
         }
+        return si;
     }
 
     // TODO: Deletes all GameObjects in the row Y and set the row cells to null.
     // You can use Destroy function to delete the GameObjects.
     public static void DeleteRow(int y)
     {
+        for(int i = 0; i < w; i++)
+        {
+            Destroy(grid[i,y]);
+            grid[i, y] = null;
+        }
     }
 
     // TODO: Moves all gameobject on row Y to row Y-1
@@ -41,17 +48,34 @@ public class Board : MonoBehaviour
     //  - Changes the GameObject transform position Gameobject.transform.position += new Vector3(0, -1, 0).
     public static void DecreaseRow(int y)
     {
+        for (int j = 0; j < w; j++)
+        {
+            grid[j, y].transform.position += new Vector3(0, -1, 0);
+        }
     }
 
     // TODO: Decreases all rows above Y
     public static void DecreaseRowsAbove(int y)
     {
+        for (int k = y; k < h; k++)
+        {
+            DecreaseRow(y);
+        }
     }
 
     // TODO: Return true if all cells in a row have a GameObject (are not null), false otherwise
     public static bool IsRowFull(int y)
     {
-        return true;
+        bool full = true;
+        for (int l = 0; l < w && full; l++)
+        {
+            if (grid[l, y] == null)
+            {
+                full = false;
+            }
+        }
+
+        return full;
     }
 
     // Deletes full rows
