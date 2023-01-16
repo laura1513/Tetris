@@ -20,7 +20,7 @@ public class Board : MonoBehaviour
     public static bool InsideBorder(Vector2 pos)
     {
         bool si;
-        if ((pos.x >= 0 && pos.x < w) && (pos.y >= 0 && pos.y < h))
+        if ((int)pos.x >= 0 && (int)pos.x < w && (int)pos.y >= 0)
         {
             si = true;
         }
@@ -50,7 +50,12 @@ public class Board : MonoBehaviour
     {
         for (int j = 0; j < w; j++)
         {
-            grid[j, y].transform.position += new Vector3(0, -1, 0);
+            if (grid[j, y] != null)
+            {
+                grid[j, y - 1] = grid[j, y];
+                grid[j, y] = null;
+                grid[j, y - 1].transform.position += new Vector3(0, -1, 0);
+            }
         }
     }
 

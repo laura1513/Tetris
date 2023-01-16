@@ -62,9 +62,15 @@ public class Piece : MonoBehaviour
             
             transform.position += new Vector3(0, -1, 0);
             if (IsValidBoard())
+            {
                 UpdateBoard();
-            else
+            }
+            else{
                 transform.position += new Vector3(0, 1, 0);
+                Board.DeleteFullRows();
+                FindObjectOfType<Spawner>().SpawnNext();
+                enabled = false;
+            }
             secondsCounter = 0;
         }
     }
@@ -77,16 +83,17 @@ public class Piece : MonoBehaviour
         {
             for (int x = 0; x < Board.w; x++)
             {
-                if (Board.grid[x, y] != null && Board.grid[x, y] == transform)
+                if (Board.grid[x, y] != null && Board.grid[x, y].transform.parent == transform)
                 {
                     Board.grid[x, y] = null;
                 }
             }
         }
         // Then you have to loop over the blocks of the current piece and add them to the Board.
-        foreach (Board a in transform)
+        foreach (Transform a in transform)
         {
             Vector2 v = Board.RoundVector2(a.position);
+            Board.grid[(int)v.x, (int)v.y] = a.gameObject;
         }
     }
 
