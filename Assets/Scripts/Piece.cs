@@ -73,8 +73,21 @@ public class Piece : MonoBehaviour
     void UpdateBoard()
     {
         // First you have to loop over the Board and make current positions of the piece null.
-        
+        for (int y = 0; y < Board.h; y++)
+        {
+            for (int x = 0; x < Board.w; x++)
+            {
+                if (Board.grid[x, y] != null && Board.grid[x, y] == transform)
+                {
+                    Board.grid[x, y] = null;
+                }
+            }
+        }
         // Then you have to loop over the blocks of the current piece and add them to the Board.
+        foreach (Board a in transform)
+        {
+            Vector2 v = Board.RoundVector2(a.position);
+        }
     }
 
     // Returns if the current position of the piece makes the board valid or not

@@ -59,7 +59,7 @@ public class Board : MonoBehaviour
     {
         for (int k = y; k < h; k++)
         {
-            DecreaseRow(y);
+            DecreaseRow(k);
         }
     }
 
